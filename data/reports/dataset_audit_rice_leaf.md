@@ -1,5 +1,5 @@
 # Dataset Audit Report: rice_leaf (grain_crop_leaf)
-**Audit Timestamp:** 2026-10-11T11:31:01.134631+00:00  
+**Audit Timestamp:** 2026-10-24T10:40:15.949400+00:00  
 **Quality Gate Status:** ✅ PASSED  
 
 ## Summary Metrics

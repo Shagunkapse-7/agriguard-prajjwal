@@ -10,5 +10,5 @@
 | vegetable_leaf | **Tomato Leaf** (`tomato_leaf`) | `mobilenet_v3_small` | 5 classes | 45 | **93.3%** | 0.9332 | 0.9378 | 0.9333 | 6.96 ms | `Operational` |
 | vegetable_leaf | **Potato Leaf** (`potato_leaf`) | `mobilenet_v3_small` | 3 classes | 33 | **93.9%** | 0.9389 | 0.9487 | 0.9394 | 17.29 ms | `Operational` |
 | vegetable_leaf | **Chilli / Pepper Leaf** (`chilli_leaf`) | `mobilenet_v3_small` | 2 classes | 16 | **93.8%** | 0.9373 | 0.9444 | 0.9375 | 6.06 ms | `Operational` |
-| grain_crop_leaf | **Rice / Paddy Leaf** (`rice_leaf`) | `resnet18` | 3 classes | 16 | **93.8%** | 0.9373 | 0.9524 | 0.9333 | 25.56 ms | `Operational` |
+| grain_crop_leaf | **Rice / Paddy Leaf** (`rice_leaf`) | `resnet18` | 3 classes | 16 | **93.8%** | 0.9373 | 0.9524 | 0.9333 | 32.01 ms | `Operational` |
 | grain_crop_leaf | **Maize / Corn Leaf** (`maize_leaf`) | `mobilenet_v3_small` | 4 classes | 20 | **90.0%** | 0.8958 | 0.9286 | 0.9000 | 8.57 ms | `Operational` |

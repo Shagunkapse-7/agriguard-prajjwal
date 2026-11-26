@@ -1,5 +1,5 @@
 # Scientific Evaluation Report: rice_leaf (resnet18)
-**Evaluation Date:** 2026-10-23T14:37:11.498485+00:00  
+**Evaluation Date:** 2026-10-25T10:00:17.882113+00:00  
 **Test Set Samples:** 16  
 
 ## Summary Performance
@@ -8,7 +8,7 @@
 - **Macro Recall:** 93.33%
 - **Macro F1-Score:** 0.9373
 - **Weighted F1-Score:** 0.9364
-- **Inference Latency (Avg):** 25.56 ms / sample
+- **Inference Latency (Avg):** 29.09 ms / sample
 
 ## Per-Class Breakdown
 | Condition | Precision | Recall | F1-Score | Support |

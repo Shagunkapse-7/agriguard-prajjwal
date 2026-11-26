@@ -67,9 +67,41 @@ def generate_report():
     with open(out_md, "w", encoding="utf-8") as f:
         f.write("\n".join(md_lines))
 
-    print(f"Model evaluation summary report written to {out_md}\n")
-    for l in md_lines[2:]:
-        print(l)
+    # Formatted ASCII table output for terminal
+    headers = ["Category", "Crop", "Architecture", "Classes", "Test N", "Accuracy", "Macro F1", "Latency", "Status"]
+    rows = [
+        [
+            s["category"],
+            s["display_name"],
+            s["architecture"],
+            f"{len(s['classes'])} cls",
+            str(s["test_samples"]),
+            f"{s['accuracy']*100:.1f}%",
+            f"{s['macro_f1']:.4f}",
+            f"{s['latency_ms']:.2f} ms",
+            "Operational",
+        ]
+        for s in summary
+    ]
+
+    col_widths = [len(h) for h in headers]
+    for row in rows:
+        for i, val in enumerate(row):
+            col_widths[i] = max(col_widths[i], len(val))
+
+    sep = "+" + "+".join("-" * (w + 2) for w in col_widths) + "+"
+    header_row = "| " + " | ".join(f"{h:<{col_widths[i]}}" for i, h in enumerate(headers)) + " |"
+
+    print("\n" + "=" * len(sep))
+    print("AGRIGUARD AI -- MULTI-CROP MODEL EVALUATION BENCHMARK".center(len(sep)))
+    print("=" * len(sep))
+    print(sep)
+    print(header_row)
+    print(sep)
+    for row in rows:
+        print("| " + " | ".join(f"{val:<{col_widths[i]}}" for i, val in enumerate(row)) + " |")
+    print(sep)
+    print(f"\nDetailed Markdown report written to: {out_md}\n")
 
 
 if __name__ == "__main__":

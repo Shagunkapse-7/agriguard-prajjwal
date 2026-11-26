@@ -70,6 +70,66 @@ def evaluate_crop_model(
 
     logger.info(f"Scientific evaluation reports successfully saved to {json_file} and {md_file}")
     logger.info(f"Summary Accuracy: {eval_results['metrics']['accuracy']*100:.2f}% | Macro F1: {eval_results['metrics']['macro_f1']:.4f}")
+
+    # Format and print the evaluation summary table
+    m = eval_results["metrics"]
+    headers = ["Category", "Crop", "Architecture", "Classes", "Test N", "Accuracy", "Macro F1", "Latency", "Status"]
+    row = [
+        "grain_crop_leaf",
+        crop,
+        arch,
+        f"{len(classes)} cls",
+        str(eval_results["num_test_samples"]),
+        f"{m['accuracy']*100:.1f}%",
+        f"{m['macro_f1']:.4f}",
+        f"{m.get('avg_latency_ms', 0.0):.2f} ms",
+        "Operational",
+    ]
+    col_widths = [max(len(h), len(r)) for h, r in zip(headers, row)]
+    sep = "+" + "+".join("-" * (w + 2) for w in col_widths) + "+"
+    header_row = "| " + " | ".join(f"{h:<{col_widths[i]}}" for i, h in enumerate(headers)) + " |"
+    data_row = "| " + " | ".join(f"{val:<{col_widths[i]}}" for i, val in enumerate(row)) + " |"
+
+    print("\n" + "=" * len(sep))
+    print(f"AGRIGUARD AI -- EVALUATION RESULT: {crop.upper()} ({arch})".center(len(sep)))
+    print("=" * len(sep))
+    print(sep)
+    print(header_row)
+    print(sep)
+    print(data_row)
+    print(sep)
+
+    # Per-class breakdown table
+    pcm = eval_results.get("per_class_metrics", {})
+    if pcm:
+        pc_headers = ["Class / Condition", "Precision", "Recall", "F1-Score", "Test Samples"]
+        pc_rows = [
+            [
+                cls_name.replace("_", " ").title(),
+                f"{stats.get('precision', 0.0)*100:.1f}%",
+                f"{stats.get('recall', 0.0)*100:.1f}%",
+                f"{stats.get('f1_score', 0.0):.4f}",
+                str(int(stats.get('support', 0))),
+            ]
+            for cls_name, stats in pcm.items()
+        ]
+        pc_widths = [len(h) for h in pc_headers]
+        for r in pc_rows:
+            for i, val in enumerate(r):
+                pc_widths[i] = max(pc_widths[i], len(val))
+        pc_sep = "+" + "+".join("-" * (w + 2) for w in pc_widths) + "+"
+        pc_header_row = "| " + " | ".join(f"{h:<{pc_widths[i]}}" for i, h in enumerate(pc_headers)) + " |"
+
+        print("\n" + pc_sep)
+        print("| " + "PER-CLASS BREAKDOWN".center(len(pc_sep) - 4) + " |")
+        print(pc_sep)
+        print(pc_header_row)
+        print(pc_sep)
+        for r in pc_rows:
+            print("| " + " | ".join(f"{val:<{pc_widths[i]}}" for i, val in enumerate(r)) + " |")
+        print(pc_sep)
+
+    print(f"\nDetailed report saved to: {md_file}\n")
     return eval_results
 
 
